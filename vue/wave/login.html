@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./login.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>login</title>
+</head>
+
+<body>
+    <!-- 最外层的大盒子 -->
+    <div class="box">
+        <!-- 滑动盒子 -->
+        <div class="pre-box">
+            <h1>WELCOME</h1>
+            <p>JOIN US!</p>
+            <div class="img-box">
+                <img src="./profile1.png" alt="">
+            </div>
+        </div>
+        <!-- 注册盒子 -->
+        <div class="register-form">
+            <!-- 标题盒子 -->
+            <div class="title-box">
+                <h1>register</h1>
+            </div>
+            <!-- 输入框盒子 -->
+            <div class="input-box">
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+                <input type="password" placeholder="re-enter password">
+            </div>
+            <!-- 按钮盒子 -->
+            <div class="btn-box">
+                <button>register</button>
+                <p onclick="mySwitch()">have account? login</p>
+            </div>
+        </div>
+
+        <!-- 登陆盒子 -->
+        <div class="login-form">
+            <div class="title-box">
+                <h1>login</h1>
+            </div>
+            <!-- 输入框盒子 -->
+            <div class="input-box">
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+            </div>
+            <!-- 按钮盒子 -->
+            <div class="btn-box">
+                <button>login</button>
+                <!-- 绑定点击时间 -->
+                <p onclick="mySwitch()">no account? register</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let flag = true
+        const mySwitch = () => {
+            if (flag) {
+                $(".pre-box").css("transform", "translateX(100%)")
+                $(".pre-box").css("background-color", "#c9e0ed")
+                $("img").attr("src", "./profile2.png")
+            } else {
+                $(".pre-box").css("transform", "translateX(0%)")
+                $(".pre-box").css("background-color", "#edd4dc")
+                $("img").attr("src", "./profile1.png")
+            }
+            flag=!flag
+        }
+    </script>
+    <script>
+        const bubbleCreate = () => {
+            const body = document.body
+            const bubble = document.createElement('span')
+            let r = Math.random() * 5 + 25
+            bubble.style.width = r + 'px'
+            bubble.style.height = r + 'px'
+            bubble.style.left = Math.random() * innerWidth + 'px'
+            body.append(bubble)
+            setTimeout(() => {
+                bubble.remove()
+            }, 4000)
+        }
+        setInterval(() => {
+            bubbleCreate()
+        }, 200);
+    </script>
+
+</body>
+
+</html>
