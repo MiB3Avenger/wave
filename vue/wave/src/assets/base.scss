@@ -44,7 +44,7 @@ $color-primary-container: rgb(92, 216, 90);
 
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-1: var(--vt-c-black);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
@@ -59,6 +59,7 @@ $color-primary-container: rgb(92, 216, 90);
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
+  --color-text-alt: var(--vt-c-text-light-2);
 
   --section-gap: 160px;
   
