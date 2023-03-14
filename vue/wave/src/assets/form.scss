@@ -1,0 +1,10 @@
+.formkit-form {
+    .formkit-outer {
+        margin-bottom: .75rem;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    .formkit-help, .formkit-option-help, .formkit-input {
+        color: var(--color-text);
+    }
+}

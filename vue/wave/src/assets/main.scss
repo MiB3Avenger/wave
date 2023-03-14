@@ -1,0 +1,55 @@
+@import "./base.scss";
+@import "./form.scss";
+
+#app {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 2rem;
+  
+  width: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: var(--color-text);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: rgba($color-primary-container, 0.3);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 3fr 12fr;
+    padding: 0 .5rem;
+  }
+}
+
+a.action-btn {
+  padding: .25rem 1rem;
+  height: 30px;
+  border-radius: 15px;
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  font-weight: bold;
+  text-transform: capitalize;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}

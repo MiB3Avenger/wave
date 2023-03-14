@@ -2,10 +2,23 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
-import "./assets/main.css";
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import * as MdIcons from "oh-vue-icons/icons/md";
+
+import MasonryWall from '@yeger/vue-masonry-wall';
+
+import { plugin, defaultConfig } from '@formkit/vue';
+
+import "@formkit/themes/genesis";
+import "./assets/main.scss";
+
+const Md = Object.values({ ...MdIcons });
+addIcons(...Md);
 
 const app = createApp(App);
 
 app.use(router);
-
+app.use(MasonryWall);
+app.use(plugin, defaultConfig);
+app.component("v-icon", OhVueIcon);
 app.mount("#app");

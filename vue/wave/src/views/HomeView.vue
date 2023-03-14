@@ -1,7 +1,10 @@
 <script setup>
 import TheWelcome from "../components/TheWelcome.vue";
+import Authenticated from "../layouts/Authenticated.vue";
 </script>
 
 <template>
-  <TheWelcome />
+    <Authenticated>
+        <TheWelcome />
+    </Authenticated>
 </template>
