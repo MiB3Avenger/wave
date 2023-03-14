@@ -2,11 +2,13 @@
 import Sidebar from "../components/Sidebar.vue";
 </script>
 <template>
-    <Sidebar />
+    <div class="app-container">
+        <Sidebar />
 
-    <main>
-        <slot />
-    </main>
+        <main>
+            <slot />
+        </main>
+    </div>
 </template>
 <style>
 @media (min-width: 1024px) {
