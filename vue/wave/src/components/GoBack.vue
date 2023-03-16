@@ -8,8 +8,8 @@ const router = useRouter();
 </template>
 <style lang="scss">
 .go-back {
-    background-color: transparent;
-    color: var(--color-text);
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
     padding: 0.5rem 1.5rem;
     border: 0;
     height: 40px;
@@ -18,8 +18,10 @@ const router = useRouter();
     border-radius: 25px;
     width: 150px;
     justify-content: center;
+    transition: 0.4s;
     &:hover {
         background-color: var(--color-background-mute);
+        color: var(--color-on-primary);
     }
 }
 </style>

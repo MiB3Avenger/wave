@@ -11,12 +11,21 @@ import Sidebar from "../components/Sidebar.vue";
     </div>
 </template>
 <style>
-@media (min-width: 1024px) {
-  main {
+main {
     height: 100vh;
-    width: 100%;
-    padding: 0 3rem;
     overflow: auto;
-  }
+    padding: 0 3rem;
+}
+@media (min-width: 1024px) {
+    main {
+        width: 100%;
+    }
+}
+@media (max-width: 1024px) {
+    main {
+        flex: 1 0;
+        flex-basis: calc(100% - 50px);
+        padding: 0 1rem;
+    }
 }
 </style>

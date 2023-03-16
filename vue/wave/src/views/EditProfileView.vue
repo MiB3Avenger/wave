@@ -47,20 +47,26 @@ const completed = ref(false);
                 <GoBack></GoBack>
                 <UserDetails :user="user" :hideEdit="true"></UserDetails>
             </div>
-            <div class="change-details">
-                <FormKit type="form" @submit="uploadProfilePicture">
-                    <FormKit type="file" name="picture" accept=".png,.jpg,.jpeg,.bmp" help="Upload a new profile picture" multiple="false" validation="required" />
-                </FormKit>
-                <FormKit type="form">
-                    <FormKit v-model="editProfile.username" type="text" label="Change Username" help="Pick a new username." validation="required|length:4" value="@useFormKit" />
-                    <FormKit v-model="editProfile.email" type="text" label="Change Email" help="Update your account's email to another email." validation="required|email" value="@useFormKit" />
-                    <FormKit v-model="editProfile.oldPassword" type="text" label="Password" help="For verifying if it's you who's changing your details." validation="required|password" value="@useFormKit" />
-                </FormKit>
-                <FormKit type="form">
-                    <FormKit v-model="changePassword.oldPassword" type="password" label="Old Password" help="For verifying if it's you who's changing your password." validation="required|password" value="@useFormKit" />
-                    <FormKit v-model="changePassword.newPassword" type="password" label="New Password" help="Change your account's password." validation="required|password" value="@useFormKit" />
-                    <FormKit v-model="changePassword.confirmNewPassword" type="password" label="Confirm New Password" help="Confirming your new password." validation="required|password" value="@useFormKit" />
-                </FormKit>
+            <div class="change-details flex">
+                <div class="flex column">
+                    <div class="upload-file">
+                        <FormKit type="form" @submit="uploadProfilePicture">
+                            <FormKit type="file" name="picture" accept=".png,.jpg,.jpeg,.bmp" help="Upload a new profile picture" multiple="false" validation="required" />
+                        </FormKit>
+                    </div>
+                    <div class="flex row">
+                        <FormKit type="form">
+                            <FormKit v-model="editProfile.username" type="text" label="Change Username" help="Pick a new username." validation="required|length:4" value="@useFormKit" />
+                            <FormKit v-model="editProfile.email" type="text" label="Change Email" help="Update your account's email to another email." validation="required|email" value="@useFormKit" />
+                            <FormKit v-model="editProfile.oldPassword" type="text" label="Password" help="For verifying if it's you who's changing your details." validation="required|password" value="@useFormKit" />
+                        </FormKit>
+                        <FormKit type="form">
+                            <FormKit v-model="changePassword.oldPassword" type="password" label="Old Password" help="For verifying if it's you who's changing your password." validation="required|password" value="@useFormKit" />
+                            <FormKit v-model="changePassword.newPassword" type="password" label="New Password" help="Change your account's password." validation="required|password" value="@useFormKit" />
+                            <FormKit v-model="changePassword.confirmNewPassword" type="password" label="Confirm New Password" help="Confirming your new password." validation="required|password" value="@useFormKit" />
+                        </FormKit>
+                    </div>
+                </div>
             </div>
         </div>
     </Authenticated>
@@ -77,6 +83,13 @@ const completed = ref(false);
         margin-right: 0;
         margin-left: 4rem;
         width: 100%;
+    }
+    .change-details {
+        justify-content: space-around;
+        margin-bottom: 2rem;
+        form {
+            flex: 0 1 50%;
+        }
     }
 }
 .go-back {
