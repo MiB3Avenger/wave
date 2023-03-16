@@ -19,6 +19,8 @@ const router = useRouter();
     width: 150px;
     justify-content: center;
     transition: 0.4s;
+    font-weight: bold;
+    white-space: nowrap;
     &:hover {
         background-color: var(--color-background-mute);
         color: var(--color-on-primary);

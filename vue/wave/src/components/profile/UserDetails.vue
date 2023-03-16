@@ -26,13 +26,12 @@ const props = defineProps(['user', 'hideEdit']);
 .user-details {
     display: flex;
     flex-direction: row;
-    padding: 1rem 6rem 2rem;
-    margin: 1rem 8rem 2rem;
+    padding: 1rem 6rem 2rem 2rem;
+    margin: 1rem 8rem 2rem 4rem;
     border-bottom: 1px solid var(--color-border);;
     
     .user-profile-picture {
-        flex: 1 0 auto;
-        width: 20%;
+        flex: 1 0 20%;
         margin-right: 2rem;
         svg {
             height: auto;
@@ -44,8 +43,7 @@ const props = defineProps(['user', 'hideEdit']);
     }
 
     .user-information {
-        flex: 4 0 auto;
-        width: max-content;
+        flex: 4 1 80%;
         display: flex;
         flex-direction: column;
         > *:not(:last-child){
@@ -79,6 +77,31 @@ const props = defineProps(['user', 'hideEdit']);
                 font-size: large;
                 text-transform: capitalize;
             }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .user-details {
+        padding-left: 0rem;
+        margin-left: 0rem;
+        margin-right: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .user-profile-picture {
+        flex-basis: 30%;
+    }
+}
+
+@media (max-width: 512px) {
+    .user-details {
+        margin-right: 0rem;
+        align-items: end;
+        .user-profile-picture {
+            flex-basis: 30%;
+            margin-right: .5rem;
         }
     }
 }

@@ -95,4 +95,19 @@ const completed = ref(false);
 .go-back {
     margin-top: 2rem;
 }
+
+@media (max-width: 768px) {
+    .user-profile.edit-profile {
+        .user-details-with-back {
+            flex-direction: column-reverse;
+            .user-details {
+                margin-left: 0;
+            }
+            .go-back {
+                margin-top: 0;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}
 </style>
