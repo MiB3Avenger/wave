@@ -8,7 +8,8 @@ class Post(models.Model):
     posted_at = models.DateField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='otheruser', blank=True)
     likes_count = models.IntegerField(blank=True, default=0) 
-    
+    user_deleted = models.BooleanField(default=False)
+    admin_deleted = models.BooleanField(default=False)
     
     def __str__(self):
         return self.body
