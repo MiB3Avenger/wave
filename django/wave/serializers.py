@@ -15,8 +15,12 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     likes = UserSerializer(many=True)
-
+    image = serializers.FileField()
     class Meta:
         model = Post
-        fields = ['id', 'author', 'body', 'posted_at', 'likes', 'likes_count', 'user_deleted', 'admin_deleted']
+        fields = ['id', 'author', 'body', 'posted_at', 'likes', 'likes_count', 'user_deleted', 'admin_deleted', 'image']
         
+
+class PostInputSerializer(serializers.ModelSerializer):
+    body = serializers.CharField()
+    image = serializers.CharField()

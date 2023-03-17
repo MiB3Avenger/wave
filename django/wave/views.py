@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from .models import Post, Comment
 from django.http import JsonResponse
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostSerializer, CommentSerializer, PostInputSerializer
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+import base64 
+from django.core.files.base import ContentFile
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -18,10 +20,20 @@ def post_list(request):
         return Response(serializer.data)
 
     if request.method == 'POST':
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()    
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        image_data = request.data['image']
+        format, imgstr = image_data.split(';base64,')
+        print("format", format)
+        ext = format.split('/')[-1]
+        data = ContentFile(base64.b64decode(imgstr))  
+        file_name = "'myphoto." + ext
+        post = PostSerializer()  
+        post.body = request.data['body']
+        post.author = request.user
+        if post.is_valid():
+            post.save()
+            post.image.save(file_name, data)
+            return Response(post, status=status.HTTP_201_CREATED)
+        
         
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
@@ -112,3 +124,26 @@ def like_detail(request,id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+
+# @api_view(['GET', 'PUT', 'DELETE'])
+# @permission_classes([IsAuthenticated])
+# def image_detail(request,id):
+#     try:
+#        post = Post.objects.get(pk=id,image=True)
+#     except Comment.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)   
+     
+#     if request.method == 'GET':
+#         serializer = PostSerializer(post)
+#         return Response(serializer.data)
+    
+#     if request.method == 'PUT':
+#         post.likes_count+=1
+#         post.likes.add(request.user)
+#         post.save()
+#         return Response(status=status.HTTP_200_OK)
+        
+    
+#     elif request.method == 'DELETE':
+#         post.likes-=1
+#         return Response(status=status.HTTP_204_NO_CONTENT)
