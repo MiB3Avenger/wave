@@ -86,69 +86,15 @@ def register(request):
 
 #edit information after login
 @login_required
-def edit(request):
-    profile = get_object_or_404(Profile, user=request.user)
+    Profile.objects.get_or_create(user=request.user)
     if request.method == "POST":
         user_form = UserEditForm(instance=request.user, data=request.POST)
-        profile_form = ProfileEditForm(instance=profile, data=request.POST, files=request.FILES)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=profile)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# #用户注册
-# def register(request):
-#     if request.method == "POST":
-#         user_form = UserRegistrationForm(request.POST)
-#         if user_form.is_valid():
-#             # 建立新数据对象但是不写入数据库
-#             new_user = user_form.save(commit=False)
-#             # 设置密码
-#             new_user.set_password(user_form.cleaned_data['password'])
-#             # 保存User对象
-#             new_user.save()
-#             Profile.objects.create(user=new_user)
-#             return render(request, 'account/register_done.html', {'new_user': new_user})
-#     else:
-#         user_form = UserRegistrationForm()
-#     return render(request, 'account/register.html', {'user_form': user_form})
-#
-#
-#
-# #用户编辑信息
-# @login_required
-# def edit(request):
-#     Profile.objects.get_or_create(user=request.user)
-#     if request.method == "POST":
-#         user_form = UserEditForm(instance=request.user, data=request.POST)
-#         profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
-#         if user_form.is_valid() and profile_form.is_valid():
-#             user_form.save()
-#             profile_form.save()
-#     else:
-#         user_form = UserEditForm(instance=request.user)
-#         profile_form = ProfileEditForm(instance=request.user.profile)
-#
-#     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
