@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-#增加
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
+#search user
+from django.contrib.auth.models import User
 
 #login
 def user_login(request):
@@ -98,3 +99,13 @@ def register(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
 
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+
+#search users
+#search result?
+def search_user(request):
+    if request.method == 'POST':
+        search_term = request.POST.get('search_term')
+        users = User.objects.filter(username__icontains=search_term)
+        return render(request, 'account/search_user.html', {'users': users, 'search_term': search_term})
+    else:
+        return render(request, 'account/search_user.html')

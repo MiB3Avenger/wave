@@ -10,4 +10,6 @@ urlpatterns = [
     path('password/change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
+    #search user
+    path('search_user/', views.search_user, name='search_user'),
 ]
