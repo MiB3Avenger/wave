@@ -8,11 +8,20 @@ export default {
                 document.querySelector('.notification-container').style.left = "calc(-300px - 0.5rem)";
             }
             this.notificationsOpen=!this.notificationsOpen;
+        },
+        bringSearch: function() {
+            if(!this.searchOpen){
+                document.querySelector('.search-container').style.left = "0";
+            } else {
+                document.querySelector('.search-container').style.left = "calc(-300px - 0.5rem)";
+            }
+            this.searchOpen=!this.searchOpen;
         }
     },
     data() {
         return {
-            notificationsOpen: false
+            notificationsOpen: false,
+            searchOpen: false
         };
     }
 }
@@ -45,9 +54,9 @@ getUser();
                     <div class="wrapper">
                         <nav>
                             <RouterLink :to="{name: 'home'}"><v-icon name="md-home-round" /><span>Home</span></RouterLink>
-                            <RouterLink to="/about"><v-icon name="md-search-round" /><span>Search</span></RouterLink>
+                            <a href="javascript:;" @click="bringSearch()"><v-icon name="md-search-round" /><span>Search</span></a>
                             <a href="javascript:;" @click="bringNotifications()"><v-icon name="md-notifications-round" /><span>Notifications</span></a>
-                            <RouterLink to="/about"><v-icon name="md-create-round" /><span>Create</span></RouterLink>
+                            <RouterLink :to="{name:'create'}"><v-icon name="md-create-round" /><span>Create</span></RouterLink>
                             <RouterLink v-if="route.params.username == undefined || user.username != route.params.username" :to="{name: 'profile'}"><v-icon name="md-person-round" /><span>Profile</span></RouterLink>
                             <RouterLink v-if="route.params.username != undefined && user.username == route.params.username" :to="{name: 'profile-username', params: {username: route.params.username}}"><v-icon name="md-person-round" /><span>Profile</span></RouterLink>
                             <RouterLink to="/about"><v-icon name="md-logout-round" /><span>Logout</span></RouterLink>
@@ -82,6 +91,23 @@ getUser();
                     <div class="notification-item">
                         <div class="user-image"><v-icon name="md-person-round" /></div>
                         <div class="notification-details"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-container">
+            <div class="back-sidebar">
+                <a class="action-btn" href="javascript:;" @click="bringSearch()"><v-icon name="md-arrowback-round" />back</a>
+            </div>
+            <div class="search">
+                <h2 class="search-title">Search</h2>
+                <div class="search-input">
+                    <FormKit type="text" label="Search User" :floating-label="true"></FormKit>
+                </div>
+                <div class="search-items">
+                    <div class="search-item">
+                        <div class="user-image"><v-icon name="md-person-round" /></div>
+                        <div class="search-details"><span>@username</span>Full Name</div>
                     </div>
                 </div>
             </div>
@@ -243,6 +269,86 @@ nav {
     }
 }
 
+.search-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: calc(-300px - 0.5rem);
+    padding-left: 1rem;
+    background-color: var(--color-background);
+    border-right: 1px solid var(--color-border);
+    transition: left ease-in .4s;
+    .back-sidebar {
+        margin: 2rem 0;
+        width: fit-content;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .search {
+        margin-right: 2rem;
+    }
+    .search-title {
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    .search-input {
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: 1rem;
+        .formkit-outer {
+            margin-bottom: 1rem !important;
+        }
+    }
+    .search-items {
+        margin-top: 1rem;
+        margin-right: .75rem;
+    }
+    .search-item {
+        display: flex;
+        flex-direction: row;
+        padding: 0.75rem 0.5rem 0;
+        border-radius: 15px;
+        border-bottom: 0.5rem solid transparent;
+        margin-bottom: 1rem;
+        &:hover {
+            background-color: var(--color-background-mute);
+        }
+        .user-image {
+            flex: 1 0 20%;
+            margin-right: 1rem;
+            svg {
+                height: auto;
+                width: 100%;
+                padding: .25rem;
+                border-radius: 8rem;
+                border: .25rem solid
+            }
+        }
+        .search-details {
+            flex: 8 1 80%;
+            display: flex;
+            flex-direction: column;
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+    .search-item:not(:last-of-type):before {
+        content: "";
+        display: block;
+        width: 90%;
+        height: 1px;
+        background-color: var(--color-border);
+        position: absolute;
+        bottom: -1rem;
+    }
+}
+
 @media (min-width: 1024px) {
     .sidebar-logo {
         padding: 0 !important;
@@ -313,7 +419,7 @@ nav {
                 }
             }
         }
-        .notification-container {
+        .notification-container, .search-container {
             z-index: 9999;
             width: 300px;
         }

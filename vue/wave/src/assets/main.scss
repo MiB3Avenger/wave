@@ -58,12 +58,25 @@ a,
     -ms-user-select: none;
     user-select: none;
     transition: 0.4s;
+    border: 0;
     &:hover {
         background-color: var(--color-background-mute);
         color: var(--color-on-primary);
     }
 }
 
+.action-btn.inverted {
+    background-color: var(--color-background-mute);
+    color: var(--color-on-primary);
+    &:hover {
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+    }
+}
+
 .clickable:hover {
     cursor: pointer;
+}
+[data-floating-label="true"] input:focus ~ .formkit-label, [data-floating-label="true"] textarea:focus ~ .formkit-label, [data-floating-label="true"] .formkit-label[data-has-value="true"], [data-floating-label="true"][data-expanded="true"] .formkit-label {
+    background-color: var(--color-background);
 }

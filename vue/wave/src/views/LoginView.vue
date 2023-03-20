@@ -37,10 +37,10 @@ import Guest from '../layouts/Guest.vue';
                         <h1>Register</h1>
                     </div>
                     <FormKit type="form" submit-label="Register">
-                        <FormKit type="text" name="username" label="Username" />
-                        <FormKit type="text" name="email" label="Email" />
-                        <FormKit type="password" name="password" label="Password"/>
-                        <FormKit type="password" name="confirmPassword" label="Confirm Password" />
+                        <FormKit :floating-label="true" type="text" name="username" label="Username" />
+                        <FormKit :floating-label="true" type="text" name="email" label="Email" />
+                        <FormKit :floating-label="true" type="password" name="password" label="Password"/>
+                        <FormKit :floating-label="true" type="password" name="confirmPassword" label="Confirm Password" />
                     </FormKit>
                     <div class="btn-box">
                         <p @click="switchLogin()">Have an account? Login here!</p>
@@ -52,8 +52,8 @@ import Guest from '../layouts/Guest.vue';
                         <h1>Login</h1>
                     </div>
                     <FormKit type="form" submit-label="Login">
-                        <FormKit type="text" name="username" label="Username" />
-                        <FormKit type="password" name="password" label="Password"/>
+                        <FormKit :floating-label="true" type="text" name="username" label="Username" />
+                        <FormKit :floating-label="true" type="password" name="password" label="Password"/>
                     </FormKit>
                     <div class="btn-box">
                         <p @click="switchLogin()">Don't have an account? Register here!</p>
@@ -157,9 +157,9 @@ import Guest from '../layouts/Guest.vue';
 .title-box {
     h1 {
         text-align: center;
-        letter-spacing: 5px;
         user-select: none;
     }
+    margin-bottom: 1rem;
 }
 
 

@@ -44,8 +44,10 @@ $color-primary-container: rgb(92, 216, 90);
 
     --vt-c-text-light-1: var(--vt-c-indigo);
     --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+    --vt-c-text-light-mute: rgba(60, 60, 60, 0.4);
     --vt-c-text-dark-1: var(--vt-c-black);
     --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+    --vt-c-text-dark-mute: rgba(235, 235, 235, 0.4);
 }
 
 /* semantic color variables for this project */
@@ -60,6 +62,7 @@ $color-primary-container: rgb(92, 216, 90);
     --color-heading: var(--vt-c-text-light-1);
     --color-text: var(--vt-c-text-light-1);
     --color-text-alt: var(--vt-c-text-light-2);
+    --color-text-mute: var(--vt-c-text-light-mute);
 
     --section-gap: 160px;
     
@@ -80,6 +83,8 @@ $color-primary-container: rgb(92, 216, 90);
         --color-heading: var(--vt-c-text-dark-1);
         --color-heading-inverted: var(--vt-c-text-dark-2);
         --color-text: var(--vt-c-text-dark-2);
+        --color-text-alt: var(--vt-c-text-dark-1);
+        --color-text-mute: var(--vt-c-text-dark-mute);
       
         --color-on-primary: rgb(255, 255, 255);
         --color-primary: rgb(16, 120, 105);
@@ -129,4 +134,7 @@ body {
     .row-revers {
         flex-direction: row-reverse;
     }
+}
+.bold {
+    font-weight: bold;
 }

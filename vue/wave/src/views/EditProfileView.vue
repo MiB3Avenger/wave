@@ -48,22 +48,22 @@ const completed = ref(false);
                 <UserDetails :user="user" :hideEdit="true"></UserDetails>
             </div>
             <div class="change-details flex">
-                <div class="flex column">
+                <div class="flex column change-profile-picture">
                     <div class="upload-file">
                         <FormKit type="form" @submit="uploadProfilePicture">
-                            <FormKit type="file" name="picture" accept=".png,.jpg,.jpeg,.bmp" help="Upload a new profile picture" multiple="false" validation="required" />
+                            <FormKit :floating-label="true" type="file" name="picture" accept=".png,.jpg,.jpeg,.bmp" help="Upload a new profile picture" multiple="false" validation="required" />
                         </FormKit>
                     </div>
-                    <div class="flex row">
+                    <div class="flex row change-user-details">
                         <FormKit type="form">
-                            <FormKit v-model="editProfile.username" type="text" label="Change Username" help="Pick a new username." validation="required|length:4" value="@useFormKit" />
-                            <FormKit v-model="editProfile.email" type="text" label="Change Email" help="Update your account's email to another email." validation="required|email" value="@useFormKit" />
-                            <FormKit v-model="editProfile.oldPassword" type="text" label="Password" help="For verifying if it's you who's changing your details." validation="required|password" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="editProfile.username" type="text" label="Change Username" help="Pick a new username." validation="required|length:4" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="editProfile.email" type="text" label="Change Email" help="Update your account's email to another email." validation="required|email" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="editProfile.oldPassword" type="text" label="Password" help="For verifying if it's you who's changing your details." validation="required|password" value="@useFormKit" />
                         </FormKit>
                         <FormKit type="form">
-                            <FormKit v-model="changePassword.oldPassword" type="password" label="Old Password" help="For verifying if it's you who's changing your password." validation="required|password" value="@useFormKit" />
-                            <FormKit v-model="changePassword.newPassword" type="password" label="New Password" help="Change your account's password." validation="required|password" value="@useFormKit" />
-                            <FormKit v-model="changePassword.confirmNewPassword" type="password" label="Confirm New Password" help="Confirming your new password." validation="required|password" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="changePassword.oldPassword" type="password" label="Old Password" help="For verifying if it's you who's changing your password." validation="required|password" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="changePassword.newPassword" type="password" label="New Password" help="Change your account's password." validation="required|password" value="@useFormKit" />
+                            <FormKit :floating-label="true" v-model="changePassword.confirmNewPassword" type="password" label="Confirm New Password" help="Confirming your new password." validation="required|password" value="@useFormKit" />
                         </FormKit>
                     </div>
                 </div>
@@ -89,6 +89,9 @@ const completed = ref(false);
         margin-bottom: 2rem;
         form {
             flex: 0 1 50%;
+        }
+        .change-user-details {
+            margin-top: 2rem;
         }
     }
 }

@@ -27,7 +27,7 @@ const props = defineProps(['user', 'hideEdit']);
     display: flex;
     flex-direction: row;
     padding: 1rem 6rem 2rem 2rem;
-    margin: 1rem 8rem 2rem 4rem;
+    margin: 0 8rem 2rem 4rem;
     border-bottom: 1px solid var(--color-border);;
     
     .user-profile-picture {
