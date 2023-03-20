@@ -14,7 +14,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -49,7 +49,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -63,7 +63,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -98,7 +98,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -112,7 +112,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -147,7 +147,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -161,7 +161,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -196,7 +196,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -210,7 +210,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -245,7 +245,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -259,7 +259,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                             </div>
                             <div class="ingo">
                                 <h3>Amy</h3>
-                                <small>Dubai, 15 minutes ago</small>
+                                <small>15 minutes ago</small>
                             </div>
                         </div>
                         <span class="edit">
@@ -294,7 +294,7 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping. <span class="harsh-tag">#lifestyle</span></p>
+                        <p><span>Amy</span> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         View all 277 comments
@@ -327,9 +327,6 @@ import Authenticated from "../layouts/Authenticated.vue";
             border-bottom: 1px solid var(--color-border);
             h3 {
                 font-weight: bold;
-            }
-            small {
-                display: none;
             }
         }
         .profile-photo {
