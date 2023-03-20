@@ -15,12 +15,9 @@
 <table>
     {% for user in users %}
     <tr>
+        <td>{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.photo }}</td>
-        <td>
-            <img src="/media/{{ user.photo }}" />
-        </td>
     </tr>
     {% endfor %}
 </table>
