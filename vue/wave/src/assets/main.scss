@@ -1,0 +1,82 @@
+@import "./base.scss";
+@import "./form.scss";
+
+#app {
+    width: 100%;
+}
+
+.app-container {  
+    width: 100%;
+    max-height: 100vh;
+    overflow: hidden;
+    font-weight: normal;
+}
+
+a,
+.green {
+    text-decoration: none;
+    color: var(--color-text);
+    transition: 0.4s;
+}
+
+@media (hover: hover) {
+    a:hover {
+        background-color: rgba($color-primary-container, 0.3);
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        display: flex;
+    }
+
+    .app-container {
+        display: grid !important;
+        grid-template-columns: 3fr 23fr;
+        padding: 0 .5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .app-container{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    padding: .25rem 1rem;
+    height: 30px;
+    border-radius: 15px;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    font-weight: bold;
+    text-transform: capitalize;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 0.4s;
+    border: 0;
+    &:hover {
+        background-color: var(--color-background-mute);
+        color: var(--color-on-primary);
+    }
+}
+
+.action-btn.inverted {
+    background-color: var(--color-background-mute);
+    color: var(--color-on-primary);
+    &:hover {
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+    }
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+[data-floating-label="true"] input:focus ~ .formkit-label, [data-floating-label="true"] textarea:focus ~ .formkit-label, [data-floating-label="true"] .formkit-label[data-has-value="true"], [data-floating-label="true"][data-expanded="true"] .formkit-label {
+    background-color: var(--color-background);
+}
