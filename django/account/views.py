@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
-#search user
 from django.contrib.auth.models import User
 
 #login
@@ -22,10 +21,10 @@ def user_login(request):
                     return HttpResponse("Disabled account")
             else:
                 return HttpResponse("Invalid login")
- 
+
     else:
         form = LoginForm()
- 
+
     return render(request, 'account/login.html', {'form': form})
 
 @login_required
@@ -85,8 +84,18 @@ def register(request):
         user_form = UserRegistrationForm()
     return render(request, 'account/register.html', {'user_form': user_form})
 
-#edit information after login
+#search users
+def search_user(request):
+    if request.method == 'POST':
+        search_term = request.POST.get('search_term')
+        users = User.objects.filter(username__icontains=search_term)
+        return render(request, 'account/search_user.html', {'users': users, 'search_term': search_term})
+    else:
+        return render(request, 'account/search_user.html')
+
+
 @login_required
+def edit(request):
     Profile.objects.get_or_create(user=request.user)
     if request.method == "POST":
         user_form = UserEditForm(instance=request.user, data=request.POST)
@@ -99,13 +108,3 @@ def register(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
 
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
-
-#search users
-#search result?
-def search_user(request):
-    if request.method == 'POST':
-        search_term = request.POST.get('search_term')
-        users = User.objects.filter(username__icontains=search_term)
-        return render(request, 'account/search_user.html', {'users': users, 'search_term': search_term})
-    else:
-        return render(request, 'account/search_user.html')

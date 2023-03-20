@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
- 
+
 {% block title %}
 Home Page
 {% endblock %}
- 
+
 {% block content %}
-    <h1>home page</h1>
-    <p>Welcome to your home page. You can <a href="{% url 'edit' %}">edit your profile</a>
-        or <a href="{% url 'password_change' %}">change your password</a>.</p>
+<h1>home page</h1>
+<p>userid：{{ request.user.id }}</p>
+<p>Welcome {{ request.user.username }} to your home page. You can <a href="{% url 'edit' %}">edit your profile</a>
+    or <a href="{% url 'password_change' %}">change your password</a>.</p>
 {% endblock %}
