@@ -11,7 +11,7 @@ class Profile(models.Model):
     def __str__(self):
             return"Profile for user {}".format(self.user.username)
 
-        def save(self, *args, **kwargs):
-                if self.user_id:
-                    self.userid = self.user_id
-                super(Profile, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+            if self.user_id:
+                self.userid = self.user_id
+            super(Profile, self).save(*args, **kwargs)

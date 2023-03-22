@@ -1,6 +1,9 @@
 venv/
 *.sqlite
 
+*media/*
+*static/*
+
 # Logs
 logs
 *.log
@@ -29,3 +32,4 @@ cypress/screenshots/
 *.njsproj
 *.sln
 *.sw?
+*.pyc
