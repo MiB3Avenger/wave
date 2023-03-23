@@ -1,15 +1,18 @@
 <script setup>
-const props = defineProps(['user', 'hideEdit']);
+const props = defineProps(['user']);
 </script>
 <template>
     <div class="user-details">
         <div class="user-profile-picture">
-            <v-icon name="md-person-round" />
+            <v-icon name="md-person-round" v-if="user?.profile.photo == null" />
+            <div v-else>
+                <img :src="user?.profile.photo" :alt="user?.username+'\'s profile picture'">
+            </div>
         </div>
         <div class="user-information">
-            <RouterLink v-if="!hideEdit" :to="{name: 'edit-profile'}" class="action-btn">Edit Profile</RouterLink>
+            <RouterLink v-if="user?.auth_user" :to="{name: 'edit-profile'}" class="action-btn">Edit Profile</RouterLink>
             <div class="user-information-data">
-                <div class="posts"><span>{{ user.posts }}</span>posts</div>
+                <div class="posts"><span>{{ user.posts.length }}</span>posts</div>
                 <div class="followers clickable" @click="alert('clicked!')"><span>{{ user.followers }}</span>followers</div>
                 <div class="following clickable" @click="alert('clicked!')"><span>{{ user.following }}</span>following</div>
             </div>
@@ -33,12 +36,17 @@ const props = defineProps(['user', 'hideEdit']);
     .user-profile-picture {
         flex: 1 0 20%;
         margin-right: 2rem;
-        svg {
+        svg, div > img {
             height: auto;
             width: 100%;
             padding: .75rem;
             border-radius: 8rem;
             border: .25rem solid
+        }
+        div > img {
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
         }
     }
 

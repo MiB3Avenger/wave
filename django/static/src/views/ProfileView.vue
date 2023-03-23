@@ -1,15 +1,5 @@
-<script>
-const win = this;
-export default {
-    methods: {
-        alert: (text) => {
-            console.log(text);
-        }
-    }
-}
-</script>
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 
 import useAuth from "../composables/auth";
 
@@ -27,11 +17,43 @@ const random = (min, max) => {
   return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-getUser();
+if(props.username != ''){
+    if(props.username != user.username && route.params?.name == 'profile-username'){
+        getUserByUserName(props.username);
+    }
+} else {
+    getUser();
+}
 
-if(user.username != props.username && route.name != 'profile'){
+if(route.params.name == 'profile'){
+    getUser();
+}
+
+if(route.params.name == 'profile-username') {
     getUserByUserName(props.username);
 }
+
+onBeforeRouteLeave(async (to, from) => {
+    if(to.name == 'profile'){
+        getUser();
+    }
+
+    if(to.name == 'profile-username') {
+        getUserByUserName(to.params.username);
+    }
+})
+
+onBeforeRouteUpdate(async (to, from) => {
+    if(from.params.username == undefined){
+        await getUserByUserName(to.params.username);
+    } else {
+        if(to.params.username != from.params.username){
+            await getUserByUserName(to.params.username);
+        } else {
+            await getUser();
+        }
+    }
+})
 
 const list = [{
     title:"test",
@@ -85,9 +107,12 @@ const list = [{
 <template>
     <Authenticated>
         <div class="user-profile">
-            <UserDetails :user="user" :hideEdit="false"></UserDetails>
-            <div class="user-posts">
-                <ProfileMasonry :list="list"></ProfileMasonry>
+            <UserDetails :user="user"></UserDetails>
+            <div class="user-posts" v-if="user.posts.length > 0">
+                <ProfileMasonry :list="user.posts"></ProfileMasonry>
+            </div>
+            <div class="user-error" v-else>
+                No posts found.
             </div>
         </div>
     </Authenticated>

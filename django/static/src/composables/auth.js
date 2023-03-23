@@ -27,7 +27,6 @@ export default function useAuth() {
                 loginUser(response, true)
             })
             .catch(error => {
-                console.log(error?.data);
                 if (error?.data) {
                     validationErrors.value = error.data
                 }
@@ -46,7 +45,6 @@ export default function useAuth() {
                 loginUser(response, true)
             })
             .catch(error => {
-                console.log(error?.data);
                 if (error?.data) {
                     validationErrors.value = error.data
                 }
@@ -74,8 +72,6 @@ export default function useAuth() {
         if (processing.value) return
 
         processing.value = true
-
-        console.log(axios);
 
         await axios.axiosInstance.delete('/logout/', { headers: useAxiosHeader() })
             .then(response => {

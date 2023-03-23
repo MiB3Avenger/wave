@@ -1,10 +1,22 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
+
+const goBackFn = () => {
+    if(window.history.state.back == null){
+        let split = route.fullPath.split("/");
+        split.pop();
+        let next = split.join("/");
+        router.push(next);
+    } else {
+        router.back()
+    }
+}
 </script>
 <template>
-    <button class="go-back" @click="router.back()"><v-icon name="md-arrowback-round" />Go Back</button>
+    <button class="go-back" @click="goBackFn"><v-icon name="md-arrowback-round" />Go Back</button>
 </template>
 <style lang="scss">
 .go-back {

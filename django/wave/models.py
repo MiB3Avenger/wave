@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.CharField(max_length=255)
+    image = models.ImageField(null=True, blank=True, upload_to="images/")
     posted_at = models.DateField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='otheruser', blank=True)
     likes_count = models.IntegerField(blank=True, default=0) 

@@ -1,17 +1,20 @@
 from django.shortcuts import render
 from .models import Post, Comment
 from django.http import JsonResponse
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostPicSerializer, PostSerializer, CommentSerializer
+from django.contrib.auth.models import User, auth
+from django.core import serializers
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
-from rest_framework import status
-import json
-from django.contrib.auth.models import User, auth
+from rest_framework.decorators import parser_classes
+from rest_framework.parsers import MultiPartParser
 
+from account.models import Profile
+from account.serializers import AccountSerializer
 
 def home(request):
     return render(request, 'index.html')
@@ -108,38 +111,79 @@ def register(request):
         return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@authentication_classes([])
 def user(request):
-    user=auth.get_user(request)
+    user = auth.get_user(request)
+
     response = {
         'username': user.username,
         'email': user.email,
         'name': user.first_name + " " + user.last_name,
         'id': user.id,
+        'auth_user': True
     }
-    return Response(response)
+
+    try:
+        profile = Profile.objects.filter(user=user.id)
+        profileSerialized = AccountSerializer(profile, many=True)
+        response['profile'] = profileSerialized.data[0]
+
+        posts = Post.objects.filter(author=user.id)
+
+        postsSerialized = PostSerializer(posts, many=True)
+        response['posts'] = postsSerialized.data
+    
+        return Response(response)
+    except:
+        return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@authentication_classes([])
 def userById(request,id):
     user=User.objects.get(id=id)
+    auth_user = auth.get_user(request)
+
     response = {
         'username': user.username,
         'email': user.email,
         'name': user.first_name + " " + user.last_name,
         'id': user.id,
+        'auth_user': user.id == auth_user.id
     }
-    return Response(response)
 
+    try:
+        posts = Post.objects.filter(author=user.id)
+
+        postsSerialized = PostSerializer(posts, many=True)
+        response['posts'] = postsSerialized.data
+    
+        return Response(response)
+    except:
+        return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+@authentication_classes([])
 def userByUsername(request,id):
     user=User.objects.get(username=id)
+    auth_user = auth.get_user(request)
+
     response = {
         'username': user.username,
         'email': user.email,
         'name': user.first_name + " " + user.last_name,
         'id': user.id,
+        'auth_user': user.id == auth_user.id
     }
-    return Response(response)
+
+    try:
+        posts = Post.objects.filter(author=user.id)
+
+        postsSerialized = PostSerializer(posts, many=True)
+        response['posts'] = postsSerialized.data
+    
+        return Response(response)
+    except:
+        return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 @authentication_classes([])
@@ -149,22 +193,52 @@ def logout(request):
     auth.logout(request)
     return Response({'success': True})
 
+
+@api_view(['GET'])
+def searchUsername(request):
+    string = request.GET['search']
+    if(string == ''):
+        return Response({'success': False, 'message': 'Enter something to search users.'})
+
+    users = User.objects.filter(username__icontains=string)[:10]
+
+    serialized_queryset = serializers.serialize('json', users)
+    return Response({'success':True,'users': users.values()})
+
+
 @api_view(['GET', 'POST'])
 @authentication_classes([])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def post_list(request):
-    
     if request.method == 'GET':
         posts = Post.objects.filter(user_deleted=False,admin_deleted=False)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
-
+    
     if request.method == 'POST':
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()    
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+        post = Post.objects.create(
+            author_id = request.data['author_id'],
+            body = request.data['body']
+        )
+        return Response({'post': post.id})
+
+@api_view(['PUT'])
+@authentication_classes([])
+@parser_classes([MultiPartParser])
+def post_pic_put(request,id):
+    try:
+       post = Post.objects.get(pk=id,user_deleted=False,admin_deleted=False)
+    except Post.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    
+    serializer = PostPicSerializer(post, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([])
 @permission_classes([IsAuthenticated])

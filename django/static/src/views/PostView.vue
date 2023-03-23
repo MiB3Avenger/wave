@@ -16,7 +16,7 @@ const props = defineProps(['id'])
                             <div class="ingo">
                                 <RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><h3>Amy</h3></RouterLink>
                                 
-                                <small>15 minutes ago</small>
+                                <RouterLink :to="{name: 'post', params: { id: 1 }}"><small>15 minutes ago</small></RouterLink>
                             </div>
                         </div>
                         <span class="edit">
@@ -44,21 +44,18 @@ const props = defineProps(['id'])
                     </div>
 
                     <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
+                        <p>Liked by <span>3,304 people</span></p>
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
+                        <p><RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><span>Amy</span></RouterLink> I like to go shopping.</p>
                     </div>
                     <div class="comments text-muted">
                         <FormKit :floating-label="true" label="Add a comment" type="text"></FormKit>
-                        <p><span>Amy</span> I like to go shopping.</p>
-                        <p><span>Amy</span> I like to go shopping.</p>
-                        <p><span>Amy</span> I like to go shopping.</p>
-                        <p><span>Amy</span> I like to go shopping.</p>
+                        <p><RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><span>Amy</span></RouterLink> I like to go shopping.</p>
+                        <p><RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><span>Amy</span></RouterLink> I like to go shopping.</p>
+                        <p><RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><span>Amy</span></RouterLink> I like to go shopping.</p>
+                        <p><RouterLink :to="{name: 'profile-username', params: { username: 'wang' }}"><span>Amy</span></RouterLink> I like to go shopping.</p>
                     </div>
                 </div>
             </div>
@@ -79,8 +76,10 @@ const props = defineProps(['id'])
                 }
             }
             p {
+                margin-bottom: .25rem;
                 span {
                     font-weight: bold;
+                    color: var(--color-text-mute);
                 }
             }
         }

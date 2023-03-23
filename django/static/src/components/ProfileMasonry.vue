@@ -7,27 +7,27 @@ const props = defineProps(['list']);
 <template>
     <MasonryWall :items="props.list" :column-width="250" :gap="10">
         <template #default="{ item, index }">
+        <RouterLink :to="{name: 'post', params: {id: item.id}}">
         <div
             :style="{ height: `${item.height}` }"
             class="post flex items-center justify-center"
         >
             <div class="post-details">
-                <span class="likes"><VIcon name="md-favorite-round"/>{{ item.likes }}</span>
-                <span class="comments"><VIcon name="md-chatbubble-round"/>{{ item.comments }}</span>
+                <span class="likes"><VIcon name="md-favorite-round"/>{{ item.likes_count }}</span>
+                <!-- <span class="comments"><VIcon name="md-chatbubble-round"/>{{ item.comments }}</span> -->
             </div>
             <div class="post-image">
-                {{ index }}
+                <img :src="item.image" :alt="item.body">
             </div>
         </div>
+        </RouterLink>
         </template>
     </MasonryWall>
 </template>
 <style lang="scss">
 .user-posts {
     .post {
-        min-height: 150px;
         width: 100%;
-        line-height: 150px;
         background: #EC985A;
         color: white;
         margin-bottom: 1%;
@@ -53,8 +53,7 @@ const props = defineProps(['list']);
             z-index: 9999;
             justify-content: flex-end;
             align-items: flex-end;
-            line-height: 100%;
-            padding: 0.5rem;
+            // line-height: 100%;
             font-size: small;
             -webkit-user-select: none;
             -ms-user-select: none;
@@ -62,6 +61,7 @@ const props = defineProps(['list']);
             span {
                 display: flex;
                 align-items: center;
+                padding: 0.5rem;
                 &:not(:first-child) {
                     margin-left: .25rem;
                 }
@@ -79,6 +79,12 @@ const props = defineProps(['list']);
             background-color: var(--color-background-mute);
             opacity: 0;
             z-index: 9998;
+        }
+        .post-image {
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 }

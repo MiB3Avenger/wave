@@ -139,8 +139,8 @@ STATIC_ROOT = BASE_DIR / "collectedstatic"
 # when run command python manage.py collectstatic
 STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -162,5 +162,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ]
 }

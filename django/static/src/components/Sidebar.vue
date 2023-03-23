@@ -27,14 +27,16 @@ export default {
 }
 </script>
 <script setup>
-import { reactive, inject } from "vue";
+import { reactive, inject, isProxy, toRaw } from "vue";
 import { useRoute } from "vue-router";
 import useAuth from "../composables/auth";
 import useUsers from "../composables/users";
+import useSearch from "../composables/search";
 
 const route = useRoute();
 const { logout } = useAuth();
 const { user } = useUsers();
+const { search, searchUser } = useSearch();
 
 </script>
 
@@ -58,8 +60,7 @@ const { user } = useUsers();
                             <a href="javascript:;" @click="bringSearch()"><v-icon name="md-search-round" /><span>Search</span></a>
                             <a href="javascript:;" @click="bringNotifications()"><v-icon name="md-notifications-round" /><span>Notifications</span></a>
                             <RouterLink :to="{name:'create'}"><v-icon name="md-create-round" /><span>Create</span></RouterLink>
-                            <RouterLink v-if="route.params.username == undefined || user.username != route.params.username" :to="{name: 'profile'}"><v-icon name="md-person-round" /><span>Profile</span></RouterLink>
-                            <RouterLink v-if="route.params.username != undefined && user.username == route.params.username" :to="{name: 'profile-username', params: {username: route.params.username}}"><v-icon name="md-person-round" /><span>Profile</span></RouterLink>
+                            <RouterLink :to="{name: 'profile'}"><v-icon name="md-person-round" /><span>Profile</span></RouterLink>
                             <a href="javascript:;" @click="logout"><v-icon name="md-logout-round" /><span>Logout</span></a>
                         </nav>
                     </div>
@@ -103,13 +104,18 @@ const { user } = useUsers();
             <div class="search">
                 <h2 class="search-title">Search</h2>
                 <div class="search-input">
-                    <FormKit type="text" label="Search User" :floating-label="true"></FormKit>
+                    <FormKit type="text" @keyup="searchUser" debounce="1000" label="Search User" :floating-label="true"></FormKit>
                 </div>
-                <div class="search-items">
-                    <div class="search-item">
-                        <div class="user-image"><v-icon name="md-person-round" /></div>
-                        <div class="search-details"><span>@username</span>Full Name</div>
-                    </div>
+                <div class="search-items" v-if="search?.results.length > 0">
+                    <RouterLink v-for="result in search?.results" :to="{name:'profile-username', params: {username: result.username}}">
+                        <div class="search-item">
+                            <div class="user-image"><v-icon name="md-person-round" /></div>
+                            <div class="search-details"><span>@{{result.username}}</span>{{result.first_name}} {{result.last_name}}</div>
+                        </div>
+                    </RouterLink>
+                </div>
+                <div class="search-error" v-else>
+                    {{ search?.error }}
                 </div>
             </div>
         </div>

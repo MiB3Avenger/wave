@@ -11,6 +11,12 @@ function auth(to, from, next) {
 
 const routes = [
     {
+        path: "/",
+        name: "home",
+        component: () => import("../views/HomeView.vue"),
+        beforeEnter: auth
+    },
+    {
         path: "/login",
         name: "login",
         component: () => import("../views/LoginView.vue"),
@@ -21,12 +27,6 @@ const routes = [
                 next()
             }
         }
-    },
-    {
-        path: "/",
-        name: "home",
-        component: () => import("../views/HomeView.vue"),
-        beforeEnter: auth
     },
     {
         path: "/about",
