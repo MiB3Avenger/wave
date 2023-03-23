@@ -10,7 +10,7 @@ export default defineConfig({
     style: 'sass'
   })],
   root: resolve('./static/src'),
-  base: '/static/',
+  base: '/',
   server: {
     host: 'localhost',
     port: 3000,
