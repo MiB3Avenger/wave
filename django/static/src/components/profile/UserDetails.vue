@@ -13,8 +13,8 @@ const props = defineProps(['user']);
             <RouterLink v-if="user?.auth_user" :to="{name: 'edit-profile'}" class="action-btn">Edit Profile</RouterLink>
             <div class="user-information-data">
                 <div class="posts"><span>{{ user.posts.length }}</span>posts</div>
-                <div class="followers clickable" @click="alert('clicked!')"><span>{{ user.followers }}</span>followers</div>
-                <div class="following clickable" @click="alert('clicked!')"><span>{{ user.following }}</span>following</div>
+                <!-- <div class="followers clickable" @click="alert('clicked!')"><span>{{ user.followers }}</span>followers</div>
+                <div class="following clickable" @click="alert('clicked!')"><span>{{ user.following }}</span>following</div> -->
             </div>
             <div class="user-username">
                 <span class="name">{{ user?.name }}</span>

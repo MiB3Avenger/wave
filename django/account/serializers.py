@@ -12,3 +12,8 @@ class AccountPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['photo']
+
+class AccountDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email']

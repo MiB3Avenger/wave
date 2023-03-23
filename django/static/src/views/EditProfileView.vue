@@ -20,17 +20,9 @@ import GoBack from "../components/GoBack.vue";
 import useUsers from "../composables/users";
 
 const {getUser, user} = useUsers();
-const { uploadProfilePicture } = useProfile();
+const { uploadProfilePicture, updateDetails } = useProfile();
 
 getUser();
-
-const editProfile = reactive({
-    username : user.username,
-    email: user.email,
-    oldPassword: '',
-    newPassword: '',
-    confirmNewPassword: ''
-});
 
 const changePassword = reactive({
     oldPassword: '',
@@ -39,6 +31,8 @@ const changePassword = reactive({
 });
 
 const completed = ref(false);
+
+const password = ref('');
 
 </script>
 <template>
@@ -53,18 +47,6 @@ const completed = ref(false);
                     <div class="upload-file">
                         <FormKit type="form" id="uploadProfilePicture" @submit="uploadProfilePicture">
                             <FormKit :floating-label="true" type="file" name="picture" accept=".png,.jpg,.jpeg,.bmp" help="Upload a new profile picture" multiple="false" validation="required" />
-                        </FormKit>
-                    </div>
-                    <div class="flex row change-user-details">
-                        <FormKit type="form" :value="editProfile">
-                            <FormKit :floating-label="true" name="username" v-model="user.username" type="text" label="Change Username" help="Pick a new username." validation="required|length:4" />
-                            <FormKit :floating-label="true" name="email" v-model="user.email" type="text" label="Change Email" help="Update your account's email to another email." validation="required|email" />
-                            <FormKit :floating-label="true" name="oldPassword" type="text" label="Password" help="For verifying if it's you who's changing your details." validation="required|password" />
-                        </FormKit>
-                        <FormKit type="form" :value="changePassword">
-                            <FormKit :floating-label="true" name="oldPassword" type="password" label="Old Password" help="For verifying if it's you who's changing your password." validation="required|password" />
-                            <FormKit :floating-label="true" name="newPassword" type="password" label="New Password" help="Change your account's password." validation="required|password" />
-                            <FormKit :floating-label="true" name="confirmNewPassword" type="password" label="Confirm New Password" help="Confirming your new password." validation="required|password" />
                         </FormKit>
                     </div>
                 </div>
@@ -90,6 +72,9 @@ const completed = ref(false);
         margin-bottom: 2rem;
         form {
             flex: 0 1 50%;
+            .formkit-wrapper {
+                max-width: 100%;
+            }
         }
         .change-user-details {
             margin-top: 2rem;

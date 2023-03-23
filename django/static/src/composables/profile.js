@@ -18,7 +18,7 @@ export default function useProfile() {
         });
 
         // Upload image...
-        await axios.axiosInstance.put('profile/picture', formData, {
+        await axios.axiosInstance.put('profile/picture/', formData, {
             headers: useAxiosHeader()
         }).then(response => {
             reset('uploadProfilePicture')
@@ -28,6 +28,15 @@ export default function useProfile() {
         })
     }
 
+    const updateDetails = async (data) => {
+        await axios.axiosInstance.post('profile/details/', data, {
+            headers: useAxiosHeader()
+        }).then(response => {
+            reset('updateDetailsForm')
+            user.username = response.data.username
+            user.email = response.data.email
+        })
+    }
 
-    return { uploadProfilePicture };
+    return { uploadProfilePicture, updateDetails };
 }

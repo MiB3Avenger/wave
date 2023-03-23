@@ -1,29 +1,34 @@
 <script setup>
 import Authenticated from "../layouts/Authenticated.vue";
+
+import usePosts from "../composables/posts";
+
+const { getPosts, posts } = usePosts()
+
+getPosts();
+
 </script>
 
 <template>
     <Authenticated>
         <div class="feed-container">
             <div class="feed">
-                <div class="post">
+                <div class="post" v-for="(post, index) in posts?.data" :key="index">
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
+                                <img :src="post.author?.detail?.photo" :alt="post.author?.username+'\'s profile picture'">
                             </div>
                             <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
+                                <RouterLink v-if="post.author?.username != undefined" :to="{name: 'profile-username', params: { username: post.author?.username }}"><h3>{{ post.author?.first_name }}</h3></RouterLink>
+                                
+                                <RouterLink v-if="post?.id" :to="{name: 'post', params: { id: post?.id }}"><small>{{ post.posted_at }}</small></RouterLink>
                             </div>
                         </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
                     </div>
 
                     <div class="photo">
-                        <img src="../assets/images/profile-1.png">
+                        <img v-if="post?.image" :src="post?.image" :alt="post?.body">
                     </div>
 
                     <div class="action-buttons">
@@ -42,262 +47,19 @@ import Authenticated from "../layouts/Authenticated.vue";
                     </div>
 
                     <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
+                        <p>liked by <span>{{ post.likes_count }} people</span></p>
                     </div>
 
                     <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
+                        <p>
+                            <RouterLink v-if="post.author?.username" :to="{name: 'profile-username', params: { username: post.author?.username }}"><span>{{ post.author?.first_name.trim() }}</span></RouterLink>
+                            {{ post?.body }}
+                        </p>
                     </div>
                     <div class="comments text-muted">
-                        View all 277 comments
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
-                            </div>
-                            <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../assets/images/profile-1.png">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <button>
-                                <v-icon name="md-favorite-twotone" />
-                                <v-icon v-if="false" name="md-favorite-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-chatbubble-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-share-round" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
-                    </div>
-
-                    <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
-                    </div>
-                    <div class="comments text-muted">
-                        View all 277 comments
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
-                            </div>
-                            <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../assets/images/profile-1.png">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <button>
-                                <v-icon name="md-favorite-twotone" />
-                                <v-icon v-if="false" name="md-favorite-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-chatbubble-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-share-round" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
-                    </div>
-
-                    <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
-                    </div>
-                    <div class="comments text-muted">
-                        View all 277 comments
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
-                            </div>
-                            <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../assets/images/profile-1.png">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <button>
-                                <v-icon name="md-favorite-twotone" />
-                                <v-icon v-if="false" name="md-favorite-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-chatbubble-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-share-round" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
-                    </div>
-
-                    <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
-                    </div>
-                    <div class="comments text-muted">
-                        View all 277 comments
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
-                            </div>
-                            <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../assets/images/profile-1.png">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <button>
-                                <v-icon name="md-favorite-twotone" />
-                                <v-icon v-if="false" name="md-favorite-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-chatbubble-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-share-round" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
-                    </div>
-
-                    <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
-                    </div>
-                    <div class="comments text-muted">
-                        View all 277 comments
-                    </div>
-                </div>
-                <div class="post">
-                    <div class="head">
-                        <div class="user">
-                            <div class="profile-photo">
-                                <img src="../assets/images/profile-1.png">
-                            </div>
-                            <div class="ingo">
-                                <h3>Amy</h3>
-                                <small>15 minutes ago</small>
-                            </div>
-                        </div>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h"></i>
-                        </span>
-                    </div>
-
-                    <div class="photo">
-                        <img src="../assets/images/profile-1.png">
-                    </div>
-
-                    <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <button>
-                                <v-icon name="md-favorite-twotone" />
-                                <v-icon v-if="false" name="md-favorite-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-chatbubble-round" />
-                            </button>
-                            <button>
-                                <v-icon name="md-share-round" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="liked-by">
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <span><img src="../assets/images/profile-1.png"></span>
-                        <p>liked by <span>3,304 people</span></p>
-                    </div>
-
-                    <div class="caption">
-                        <p><span>Amy</span> I like to go shopping.</p>
-                    </div>
-                    <div class="comments text-muted">
-                        View all 277 comments
+                        <RouterLink v-if="post?.id" :to="{name: 'post', params: { id: post?.id }}">
+                            View all comments
+                        </RouterLink>
                     </div>
                 </div>
             </div>

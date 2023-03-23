@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/posts/', views.post_list),
     path('api/posts/create/<int:id>', views.post_pic_put),
     path('api/posts/<int:id>', views.post_detail),
+    path('api/posts/<int:id>/comments/', views.comment_list),
     path('api/comments/', views.comment_detail),
     path('api/comments/<int:id>', views.post_detail),
     path('api/posts/<int:id>/like',views.like_detail),
@@ -37,7 +38,8 @@ urlpatterns = [
     path('api/logout/', views.logout),
 
 
-    path('api/profile/picture', accountViews.upload_profile_pic),
+    path('api/profile/picture/', accountViews.upload_profile_pic),
+    path('api/profile/details/', accountViews.change_details),
 
     re_path(r'^media/(?P<path>.*)$', serve, {
         'document_root': settings.MEDIA_ROOT

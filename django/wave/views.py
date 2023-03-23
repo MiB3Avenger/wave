@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Post, Comment
 from django.http import JsonResponse
-from .serializers import PostPicSerializer, PostSerializer, CommentSerializer
+from .serializers import UserSerializer, PostPicSerializer, PostSerializer, CommentSerializer, CommentPostSerializer
 from django.contrib.auth.models import User, auth
 from django.core import serializers
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -125,14 +125,21 @@ def user(request):
 
     try:
         profile = Profile.objects.filter(user=user.id)
-        profileSerialized = AccountSerializer(profile, many=True)
-        response['profile'] = profileSerialized.data[0]
+
+        try:
+            profileSerialized = AccountSerializer(profile, many=True)
+            response['profile'] = profileSerialized.data[0]
+        except:
+            return Response({'success':False, 'message':'account'}, status=status.HTTP_400_BAD_REQUEST)
+
 
         posts = Post.objects.filter(author=user.id)
+        try:
+            postsSerialized = PostSerializer(posts, many=True)
+            response['posts'] = postsSerialized.data
+        except:
+            return Response({'success':False, 'message':'post'}, status=status.HTTP_400_BAD_REQUEST)
 
-        postsSerialized = PostSerializer(posts, many=True)
-        response['posts'] = postsSerialized.data
-    
         return Response(response)
     except:
         return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
@@ -150,13 +157,24 @@ def userById(request,id):
         'id': user.id,
         'auth_user': user.id == auth_user.id
     }
-
-    try:
-        posts = Post.objects.filter(author=user.id)
-
-        postsSerialized = PostSerializer(posts, many=True)
-        response['posts'] = postsSerialized.data
     
+    try:
+        profile = Profile.objects.filter(user=user.id)
+
+        try:
+            profileSerialized = AccountSerializer(profile, many=True)
+            response['profile'] = profileSerialized.data[0]
+        except:
+            return Response({'success':False, 'message':'account'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        posts = Post.objects.filter(author=user.id)
+        try:
+            postsSerialized = PostSerializer(posts, many=True)
+            response['posts'] = postsSerialized.data
+        except:
+            return Response({'success':False, 'message':'post'}, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(response)
     except:
         return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
@@ -174,13 +192,24 @@ def userByUsername(request,id):
         'id': user.id,
         'auth_user': user.id == auth_user.id
     }
-
-    try:
-        posts = Post.objects.filter(author=user.id)
-
-        postsSerialized = PostSerializer(posts, many=True)
-        response['posts'] = postsSerialized.data
     
+    try:
+        profile = Profile.objects.filter(user=user.id)
+
+        try:
+            profileSerialized = AccountSerializer(profile, many=True)
+            response['profile'] = profileSerialized.data[0]
+        except:
+            return Response({'success':False, 'message':'account'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        posts = Post.objects.filter(author=user.id)
+        try:
+            postsSerialized = PostSerializer(posts, many=True)
+            response['posts'] = postsSerialized.data
+        except:
+            return Response({'success':False, 'message':'post'}, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(response)
     except:
         return Response({'success':False}, status=status.HTTP_400_BAD_REQUEST)
@@ -213,7 +242,21 @@ def post_list(request):
     if request.method == 'GET':
         posts = Post.objects.filter(user_deleted=False,admin_deleted=False)
         serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
+
+        post = serializer.data
+
+        for i in range(len(post)):
+            user = post[i]['author']
+
+            profile = Profile.objects.filter(user=user['id'])
+
+            try:
+                profileSerialized = AccountSerializer(profile, many=True)
+                post[i]['author']['detail'] = profileSerialized.data[0]
+            except:
+                return Response({'success':False, 'message':'account'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(post)
     
     if request.method == 'POST':
         post = Post.objects.create(
@@ -241,7 +284,7 @@ def post_pic_put(request,id):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def post_detail(request,id):
     try:
        post = Post.objects.get(pk=id,user_deleted=False,admin_deleted=False)
@@ -250,7 +293,20 @@ def post_detail(request,id):
      
     if request.method == 'GET':
         serializer = PostSerializer(post)
-        return Response(serializer.data)
+
+        post = serializer.data
+
+        user = post['author']
+
+        profile = Profile.objects.filter(user=user['id'])
+
+        try:
+            profileSerialized = AccountSerializer(profile, many=True)
+            post['author']['detail'] = profileSerialized.data[0]
+        except:
+            return Response({'success':False, 'message':'account'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(post)
     
     elif request.method == 'PUT':
         serializer = PostSerializer(post, data=request.data)
@@ -267,24 +323,38 @@ def post_detail(request,id):
 
 @api_view(['GET', 'POST'])
 @authentication_classes([])
-@permission_classes([IsAuthenticated])
-def comment_list(request):
+@permission_classes([])
+def comment_list(request, id):
     
     if request.method == 'GET':
-        comments = Comment.objects.all()
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        try:
+            comments = Comment.objects.all()
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
+        except:
+            return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'POST':
-        serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()    
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer = CommentPostSerializer(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            comment = serializer.data
+
+            try:
+                user = User.objects.get(id=comment['author'])
+                author = UserSerializer(user)
+            except:
+                return Response({'success': False, 'message': 'exception'}, status=status.HTTP_400_BAD_REQUEST)
+
+            comment['author'] = author.data
+            return Response(comment)
+        
+        return Response({'success': False, 'message': 'exception'}, status=status.HTTP_400_BAD_REQUEST)
         
         
 @api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def comment_detail(request,id):
     try:
        comment = Comment.objects.get(pk=id)
@@ -296,7 +366,7 @@ def comment_detail(request,id):
         return Response(serializer.data)
     
     elif request.method == 'PUT':
-        serializer = CommentSerializer(comment, data=request.data)
+        serializer = CommentPostSerializer(comment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

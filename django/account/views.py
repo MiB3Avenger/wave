@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
-from .serializers import AccountSerializer, AccountPhotoSerializer
+from .serializers import AccountSerializer, AccountPhotoSerializer, AccountDetailsSerializer
 from django.contrib.auth.models import User, auth
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.decorators import parser_classes
@@ -127,14 +127,27 @@ def upload_profile_pic(request):
     user = auth.get_user(request)
     profile, created = Profile.objects.get_or_create(user=user)
 
-    print(request.data['photo'])
-
     picture = AccountPhotoSerializer(profile, data=request.data)
     if picture.is_valid():
         picture.save()
         return Response(picture.data)
     
     return Response(json.dumps(request.data['photo']))
-    # try:
-    # except:
-    #     return Response({'success':True})
+
+@api_view(['POST'])
+@authentication_classes([])
+def change_details(request):
+    user = auth.get_user(request)
+    userObject = User.objects.get(id=user.id)
+
+    userAuth = auth.authenticate(username=user.username, password=request.data['password'])
+    if(userAuth is not None):
+
+        data = {'username': request.data['username'], 'email': request.data['email']}
+        userSerializer = AccountDetailsSerializer(userObject, data=data)
+        
+        if(userSerializer.is_valid()):
+            userSerializer.save()
+            return Response(userSerializer.data)
+    
+    return Response({'success':False},status=status.HTTP_400_BAD_REQUEST)
