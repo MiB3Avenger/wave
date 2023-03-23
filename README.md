@@ -33,9 +33,7 @@ Start server by:<br />
 ``` python manage.py migrate ```<br />
 ``` python manage.py runserver ```
 
-For front-end, install node and npm. Then enter vue project director by:<br />
-``` cd vue/wave ```
-
+For front-end, install node and npm.<br />
 Install node packages by:<br />
 ``` npm run install ```
 
