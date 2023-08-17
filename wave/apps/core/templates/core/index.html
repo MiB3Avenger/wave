@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load django_vite %}
+
+{% block extra-head %}
+  {{ view.test_data|json_script:"server_data" }}
+  {% vite_hmr_client %}
+  {% vite_asset 'js/main.js' %}
+
+  <link rel="icon" type="image/x-icon" href="{% vite_asset_url 'assets/favicon.ico' %}">
+{% endblock extra-head %}
+
+{% block content %}
+  <div id="app"></div>
+{% endblock content %}

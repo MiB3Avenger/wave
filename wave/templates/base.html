@@ -1,0 +1,28 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    {% if view.prevent_search_indexing %}
+      <meta name="robots" content="noindex, nofollow">
+    {% endif %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <title>{{ view.title|default:"My project" }}</title>
+
+    {% include "include/global_variables.html" %}
+
+    {% block css_block %}
+      {# Global CSS files #}
+    {% endblock css_block %}
+    {% block extra-head %}{% endblock extra-head %}
+  </head>
+
+  <body class="{% if view.body_class %} {{ view.body_class }}{% elif view_body_class %} {{ view_body_class }}{% endif %}">
+    {% block content %}{% endblock %}
+    {% block js_block %}
+      {# Global JS files #}
+    {% endblock %}
+    {% block body_end %} {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,4 @@
+{{ global_variables|json_script:"__globalVariables__" }}
+<script type="text/javascript">
+  window.__app__ = JSON.parse(document.getElementById('__globalVariables__').textContent);
+</script>

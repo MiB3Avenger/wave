@@ -1,0 +1,1 @@
+This folder contains global static files and is added in the settings
