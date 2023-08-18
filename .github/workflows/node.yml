@@ -12,18 +12,33 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       # don't fail the entire matrix on failure
+      max-parallel: 4
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
         node-version: [16.x, 18.x, 20.x]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python manage.py migrate
+        python manage.py collectstatic --noinput
+
     - name: Set Environment
       run: |
-        export APP_ENV=testing
+        export APP_ENV=local
+
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: cypress-io/github-action@v5
       with:
         build: npm run build
-        start: npm run dev
+        start: python manage.py runserver
