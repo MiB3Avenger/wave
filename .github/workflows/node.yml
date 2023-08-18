@@ -40,7 +40,7 @@ jobs:
       with:
         record: true
         parallel: true
-        start: python manage.py runserver && npm run dev
+        start: python manage.py runserver 0:8000 & npm run dev
         wait-on: 'http://127.0.0.1:8000'
       env:
         # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
