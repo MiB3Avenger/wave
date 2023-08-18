@@ -15,7 +15,6 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        containers: [1, 2, 3, 4] # Uses 2 parallel instances
         # run copies of the current job in parallel
         node-version: [16.x, 18.x, 20.x]
         python-version: [3.9]
