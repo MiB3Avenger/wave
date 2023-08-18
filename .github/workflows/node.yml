@@ -15,7 +15,6 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [1, 2, 3, 4]
         node-version: [16.x, 18.x, 20.x]
 
     steps:
@@ -27,6 +26,5 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: cypress-io/github-action@v5
       with:
-        parallel: true
         build: npm run build
         start: npm run dev
