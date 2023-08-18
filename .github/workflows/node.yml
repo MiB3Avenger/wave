@@ -27,13 +27,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
+        export APP_ENV=prod
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         python manage.py migrate
         npm ci
         npm run build --if-present
         python manage.py collectstatic --noinput
-        export APP_ENV=prod
 
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }} for testing
