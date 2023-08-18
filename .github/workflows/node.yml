@@ -22,6 +22,7 @@ jobs:
     - name: Set Environment
       run: |
         export APP_ENV=testing
+        printenv APP_ENV
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: cypress-io/github-action@v5
