@@ -2,9 +2,8 @@ name: Deploy CI
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ ]
+    branches: 
+      - main
 
 jobs:
   build:
