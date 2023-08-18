@@ -30,6 +30,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         python manage.py migrate
+        npm run build
         python manage.py collectstatic --noinput
 
     - name: Set Environment
@@ -40,5 +41,4 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: cypress-io/github-action@v5
       with:
-        build: npm run build
         start: python manage.py runserver
