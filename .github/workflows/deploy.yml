@@ -1,0 +1,21 @@
+name: Deploy CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: bash deploy.sh
