@@ -50,9 +50,10 @@ export default {
             let parsed = JSON.parse(value)
 
             // If the token is not present, we will logout the user.
-            if(value == null)
+            if(value == null){
                 this.resetLoggedIn()
-            else {
+                this.isLoading = false
+            } else {
                 this.$store.dispatch("changeToken", parsed)
                 
                 let interval = setInterval(() => {
@@ -60,8 +61,6 @@ export default {
                         if(store.getters.loggedIn == true && parse != ''){
                             if(route?.name == 'login')
                                 router.push({name: 'home'})
-
-                            this.isLoading = false
 
                             clearInterval(interval)
                         }
@@ -73,23 +72,23 @@ export default {
             let parsed = JSON.parse(value)
 
             // If the logged in state is not present, we will logout the user.
-            if(value == null)
+            if(value == null){
                 this.resetLoggedIn()
-            else {
+                this.isLoading = false
+            } else {
                 this.$store.dispatch("changeLoggedIn", parsed)
                 
                 let interval = setInterval(() => {
                     if(route.name !== undefined) {
                         if(parsed == true && store.getters.token != ''){
-
                             if(route?.name == 'login')
                                 router.push({name: 'home'})
-                            
-                            this.isLoading = false
 
                             clearInterval(interval)
                         }
+                        this.isLoading = false
                     }
+                    console.log(this.isLoading, route.name, parsed, store.getters.token);
                 }, 100)
             }
         })

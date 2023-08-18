@@ -27,3 +27,6 @@ git_version
 node_modules*
 *.todo
 __pycache__/
+dist/
+cypress/
+!frontend/cypress/
