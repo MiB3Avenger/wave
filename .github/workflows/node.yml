@@ -24,6 +24,13 @@ jobs:
         up-flags: "-d --build"
 
     # - uses: actions/checkout@v3
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/Cypress
+          node_modules
+        key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+    - run: npm i cypress
     - name: Start testing
       uses: cypress-io/github-action@v5
       with:
