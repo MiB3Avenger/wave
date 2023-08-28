@@ -1,6 +1,7 @@
-const { resolve } = require("path");
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+const { resolve } = require("path")
+import { fileURLToPath, URL } from "url"
+import { defineConfig } from "vite"
+import vue from "@vitejs/plugin-vue"
 
 export default defineConfig({
   plugins: [vue()],
@@ -10,7 +11,7 @@ export default defineConfig({
       ? "https://wave.mib3avenger.com/static/vite/"
       : "http://localhost:3000/",
   server: {
-    host: "localhost",
+    host: "0.0.0.0",
     port: 3000,
     open: false,
     watch: {
@@ -24,14 +25,18 @@ export default defineConfig({
   },
   resolve: {
     extensions: [".js", ".json", ".vue", ".less", ".scss"],
-    alias: {
-      "@app": resolve(__dirname, "./frontend/src"),
-      "@app/js": resolve(__dirname, "./frontend/src/js"),
-      "@app/css": resolve(__dirname, "./frontend/src/css"),
-      "@app/icons": resolve(__dirname, "./frontend/src/icons"),
-      "@app/assets": resolve(__dirname, "./frontend/src/assets"),
-      "tailwind-config": resolve(__dirname, "./tailwind.config.js"),
-    },
+    alias: [
+      { find: '@app', replacement: fileURLToPath(new URL('./frontend/src', import.meta.url)) },
+      { find: 'tailwind-config', replacement: fileURLToPath(new URL('./tailwind.config.js', import.meta.url)) },
+    ],
+    // alias: {
+    //   "@app": resolve(__dirname, "./frontend/src"),
+    //   "@app/js": resolve(__dirname, "./frontend/src/js"),
+    //   "@app/css": resolve(__dirname, "./frontend/src/css"),
+    //   "@app/icons": resolve(__dirname, "./frontend/src/icons"),
+    //   "@app/assets": resolve(__dirname, "./frontend/src/assets"),
+    //   "tailwind-config": resolve(__dirname, "./tailwind.config.js"),
+    // },
   },
   optimizeDeps: {
     include: ["tailwind-config"],
@@ -41,7 +46,7 @@ export default defineConfig({
     assetsDir: "",
     manifest: true,
     emptyOutDir: true,
-    target: "es2015",
+    target: "esnext",
     rollupOptions: {
       input: {
         main: resolve("./frontend/src/js/main.js"),

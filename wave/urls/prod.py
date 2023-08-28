@@ -15,6 +15,9 @@ urlpatterns = [
     re_path(app_prefix, include('wave.urls.base')),
 ]
 
+print(getattr(settings, "SERVE_MEDIA_FILES", False))
+print(getattr(settings, "SERVE_STATIC_FILES", False))
+
 if getattr(settings, "SERVE_MEDIA_FILES", False):
     urlpatterns += static(
         settings.MEDIA_URL,
@@ -28,7 +31,10 @@ if getattr(settings, "SERVE_STATIC_FILES", False):
     )
 
 
+print(getattr(settings, "STATIC_URL", False))
+print(getattr(settings, "STATIC_ROOT", False))
+
 urlpatterns += [
     # Else just open vue frontend
-    re_path(r'.*', include('core.urls')),
+    re_path(r'', include('core.urls')),
 ]

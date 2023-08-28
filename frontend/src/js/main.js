@@ -16,6 +16,7 @@ import '@formkit/addons/css/floatingLabels';
 import "@formkit/themes/genesis";
 
 import "@app/css/style.scss"
+import "@app/assets/favicon.ico"
 
 const Md = Object.values({ ...MdIcons })
 addIcons(...Md)

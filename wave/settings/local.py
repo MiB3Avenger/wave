@@ -8,7 +8,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=["*"])
 
 ROOT_URLCONF = "wave.urls.local"
 
-# We want full dbugging in development
+# We want full debugging in development
 LOGGING["root"]["level"] = "DEBUG"
 # Normal formatting for local development
 LOGGING["handlers"]["console"]['formatter'] = "verbose"
@@ -18,7 +18,7 @@ del TEMPLATES[0]['OPTIONS']['loaders']
 TEMPLATES[0]['APP_DIRS'] = True
 TEMPLATES[0]['OPTIONS']['debug'] = True
 
-# For local development we don't want to bother with interactive debuger PIN
+# For local development we don't want to bother with interactive debugger PIN
 os.environ['WERKZEUG_DEBUG_PIN'] = 'off'
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = True

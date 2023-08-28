@@ -28,7 +28,8 @@ To track changes visit:
 <a id="running-with-docker"></a>
 ## Running with docker
 
-Clone repository, switch dir to the cloned repo and run `compose up`
+Clone repository, switch dir to the cloned repo and run `docker compose -f docker-compose.yml up -d --build`
+Once you build the image, run `docker compose up -d` in the future, unless image has been changed.
 This will build Docker container and spin up Django application on `http://localhost:8000`
 and vite dev server on port `http://localhost:3000/static/vite/`
 
