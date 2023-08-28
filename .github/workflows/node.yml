@@ -23,7 +23,7 @@ jobs:
         compose-file: "./docker-compose.yml"
         up-flags: "-d --build"
 
-    - uses: actions/checkout@v3
+    # - uses: actions/checkout@v3
     - name: Start testing
       uses: cypress-io/github-action@v5
       with:
