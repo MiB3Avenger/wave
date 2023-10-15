@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    image: wave
+    command: python manage.py runserver_plus 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+  vite:
+    build: .
+    image: wave
+    command: npm run dev
+    volumes:
+      - .:/code
+      - /code/node_modules
+    ports:
+      - "3000:3000"

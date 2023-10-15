@@ -1,0 +1,45 @@
+name: Vue CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  cypress-run:
+
+    runs-on: ubuntu-latest
+    strategy:
+      # don't fail the entire matrix on failure
+      max-parallel: 4
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up docker
+      uses: isbang/compose-action@v1.5.1
+      with:
+        compose-file: "./docker-compose.yml"
+        up-flags: "-d --build"
+
+    # - uses: actions/checkout@v3
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache/Cypress
+          node_modules
+        key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+    - run: npm i cypress
+    - name: Start testing
+      uses: cypress-io/github-action@v5
+      with:
+        install: false
+        record: true
+        parallel: true
+      env:
+        # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
+        # in GitHub repo → Settings → Secrets → Actions
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+        # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
