@@ -87,7 +87,7 @@ you need to run `./manage.py collectstatic`.
 # Team Members
 The initial team members who worked on the project.
 |Name|Github|GUID|Course|
-|---|---|---|---|---|
+|---|---|---|---|
 |Zhou, Xin|[@didi-0](https://github.com/didi-0)|2756254|MSc in |
 |Mcintyre, Robbie|[@RobbieMcintyre99](https://github.com/RobbieMcintyre99)|2330005|MSc in |
 |Yang, Yuang|[@RyanXXXXXXXX](https://github.com/RyanXXXXXXXX)|2754318|MSc in |
