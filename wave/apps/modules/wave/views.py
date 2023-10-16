@@ -38,7 +38,7 @@ def login(request):
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
-                'user_id': user.pk,
+                'id': user.pk,
                 'email': user.email,
                 'username': user.username,
                 'name': user.first_name + " " + user.last_name
@@ -99,7 +99,7 @@ def register(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
-            'user_id': user.pk,
+            'id': user.pk,
             'email': user.email,
             'username': user.username,
             'name': user.first_name + " " + user.last_name

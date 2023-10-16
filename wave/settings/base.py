@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Cast project dirs as string for future manipulation
 PROJECT_ROOT = BASE_DIR / "wave"
 
-# This is WSGI sccript prefix, used to resolve urls
+# This is WSGI script prefix, used to resolve urls
 APP_PREFIX = env.str("APP_PREFIX", default="/")
 APP_ENV = env.str("APP_ENV", default="local")
 
